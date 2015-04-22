@@ -1,0 +1,63 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.o.d
+*.so
+
+# Comiled code #
+################
+bin/*
+target/*
+/bin/
+
+# SBT created directories #
+###########################
+project/project/*
+project/target/*
+
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
+
+# Generated code #
+##################
+obj/*
+libs/*
+gen/*
+
+# Logs               #
+######################
+*.log
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Eclipse Artifacts #
+#####################
+.metadata/*
+.cache
+.settings/*
+
+# Emacs Files #
+###############
+*~
+
+
+
