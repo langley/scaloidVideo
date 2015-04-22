@@ -3,7 +3,7 @@ package scaloid.example
 import org.scaloid.common._
 import android.graphics.Color
 
-class ScaloidVideo extends SActivity {
+class ScaloidVideoCapture extends SActivity {
 
   onCreate {
     contentView = new SVerticalLayout {
