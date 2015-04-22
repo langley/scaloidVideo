@@ -4,7 +4,7 @@ javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
 
 android.Plugin.androidBuild
 
-name := "scaloidVideo"
+name := "ScaloidVideo"
 
 scalaVersion := "2.11.6"
 
