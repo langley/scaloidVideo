@@ -23,12 +23,13 @@ class ScaloidVideoCapture extends SActivity {
 //    } padding 20.dip
 //  }
   onCreate { 
-    contentView = new SVerticalLayout { 
-      new SFrameLayout()
-      SImageButton().onClick(startRecording).imageResource(0x7f020005)
-      SButton("Yeah", toast("Yeah"))
-      SImageButton().onClick(stopRecording).imageResource(0x7f020003)
-    } padding 20.dip
+    contentView =  new SVerticalLayout {
+      // new SFrameLayout { 
+        SImageButton().onClick(startRecording).imageResource(0x7f020005)
+        SImageButton().onClick(stopRecording).imageResource(0x7f020003)
+        SButton("Yeah", toast("Yeah"))
+      //}
+    }
   }
   
   def startRecording(): Unit = { 
