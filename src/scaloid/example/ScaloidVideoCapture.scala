@@ -1,7 +1,11 @@
 package scaloid.example
 
 import org.scaloid.common._
-import android.graphics.Color
+import android.content.Intent
+import android.hardware.Camera
+import android.media.CamcorderProfile
+import android.media.MediaRecorder
+import android.view.Gravity
 
 class ScaloidVideoCapture extends SActivity {
 
@@ -22,11 +26,13 @@ class ScaloidVideoCapture extends SActivity {
 //      SEditText("ScaloidVideo is Yellow!").fill
 //    } padding 20.dip
 //  }
+  var recording: Boolean = false;
   onCreate { 
-    contentView =  new SRelativeLayout {
-        SImageButton().onClick(startRecording).imageResource(0x7f020005).alignParentTop
-        SButton("Yeah").onClick(toast("Yeah")).centerInParent
-        SImageButton().onClick(stopRecording).imageResource(0x7f020003).alignParentBottom
+    val camera = Camera.open
+    contentView =  new SFrameLayout {
+        SImageButton().onClick(startRecording).imageResource(0x7f020005).Gravity(Gravity.TOP)// .alignParentTop
+        this += new CameraPreview(camera)
+        SImageButton().onClick(stopRecording).imageResource(0x7f020003).Gravity(Gravity.BOTTOM) //.alignParentBottom
     }
   }
   
