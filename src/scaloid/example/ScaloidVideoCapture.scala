@@ -9,28 +9,10 @@ import android.view.View
 
 class ScaloidVideoCapture extends SActivity {
 
-//  onCreate {
-//    contentView = new SVerticalLayout {
-//      style {
-//        case b: SButton => b.textColor(Color.RED).onClick(toast("Bang!"))
-//        case t: STextView => t textSize 10.dip
-//        case e: SEditText => e.backgroundColor(Color.YELLOW).textColor(Color.BLACK)
-//      }
-//      STextView("I am 10 dip tall... whatever that means")
-//      STextView("Me too")
-//      STextView("I am 15 dip tall") textSize 15.dip // overriding
-//      this += new SLinearLayout {
-//        STextView("Button: ")
-//        SButton(R.string.red)
-//      }.wrap
-//      SEditText("ScaloidVideo is Yellow!").fill
-//    } padding 20.dip
-//  }
-  var recording: Boolean = false;
+  var startRecordingButton: SImageButton = null
+  var stopRecordingButton:  SImageButton = null
   
-  var startRecordingButton: SImageButton = null; 
-  var stopRecordingButton:  SImageButton = null; 
-  onCreate { 
+  onCreate {
     val camera = Camera.open
     contentView =  new SFrameLayout {
         this += new CameraPreview(camera)
