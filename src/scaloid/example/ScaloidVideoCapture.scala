@@ -38,6 +38,7 @@ class ScaloidVideoCapture extends SActivity {
   }
   
   def startRecording(): Unit = {
+    camera.unlock()
     mediaRecorder = new MediaRecorder();
     mediaRecorder.setCamera(camera);
 
