@@ -75,28 +75,26 @@ class ScaloidVideoCapture extends SActivity {
             mediaRecorder.stop()
             toast("recording saved")
             // we are no longer recording
-            toggleButtons(false);
+            toggleButtons(false)
         } catch { 
           case e: RuntimeException => 
-            toast("FUCK")
             // the recording did not succeed
-            Log.w(TAG, "Failed to record", e);
+            Log.w(TAG, "Failed to record", e)
             if (file != null && file.exists() && file.delete()) {
-                Log.d(TAG, "Deleted " + file.getAbsolutePath());
+                Log.d(TAG, "Deleted " + file.getAbsolutePath())
             }
             return
         } finally {
-            this.releaseMediaRecorder();
+            this.releaseMediaRecorder()
         }
         if (this.file == null || !this.file.exists()) {
-            toast("Argh... File doesn't exist")
-            Log.w(TAG, "File does not exist after stop: " + this.file.getAbsolutePath());
+            Log.w(TAG, "File does not exist after stop: " + this.file.getAbsolutePath())
         } else {
             toast("Going to display mode")
-            Log.d(TAG, "Going to display the video: " + this.file.getAbsolutePath());
+            Log.d(TAG, "Going to display the video: " + this.file.getAbsolutePath())
             // val intent: Intent = new Intent(this, null)
             // intent.setData(Uri.fromFile(file))
-            // super.startActivity(intent);
+            // super.startActivity(intent)
         }    
     toggleButtons(true)
   }
