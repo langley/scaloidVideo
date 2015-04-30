@@ -1,6 +1,7 @@
 package scaloid.example
 
 import org.scaloid.common._
+
 import android.hardware.Camera
 import android.media.CamcorderProfile
 import android.media.MediaRecorder
@@ -8,6 +9,8 @@ import android.view.Gravity
 import android.view.View
 import android.util.Log
 import android.os.Environment
+import android.content.Intent
+import android.net.Uri
 
 import java.io.File
 import java.util.Date
@@ -20,6 +23,7 @@ class ScaloidVideoCapture extends SActivity {
   var mediaRecorder: MediaRecorder = null
   var camera: Camera = null
   var cameraPreview: CameraPreview = null
+  var file: File = null // TODO look for ways to eliminate some of these
   
   onCreate {
     camera = Camera.open
@@ -39,26 +43,26 @@ class ScaloidVideoCapture extends SActivity {
   
   def startRecording(): Unit = {
     camera.unlock()
-    mediaRecorder = new MediaRecorder();
-    mediaRecorder.setCamera(camera);
+    mediaRecorder = new MediaRecorder()
+    mediaRecorder.setCamera(camera)
 
-    mediaRecorder.setAudioSource(mediaRecorder.AudioSource.CAMCORDER);
-    mediaRecorder.setVideoSource(mediaRecorder.VideoSource.CAMERA);
-    mediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-    mediaRecorder.setOutputFile(initFile().getAbsolutePath());
-    mediaRecorder.setPreviewDisplay(cameraPreview.getHolder().getSurface());
+    mediaRecorder.setAudioSource(mediaRecorder.AudioSource.CAMCORDER)
+    mediaRecorder.setVideoSource(mediaRecorder.VideoSource.CAMERA)
+    mediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH))
+    mediaRecorder.setOutputFile(initFile().getAbsolutePath())
+    mediaRecorder.setPreviewDisplay(cameraPreview.getHolder().getSurface())
     try {
-    	mediaRecorder.prepare();
+    	mediaRecorder.prepare()
     	// start the actual recording
     	// throws IllegalStateException if not prepared
-    	mediaRecorder.start();
+    	mediaRecorder.start()
     	// enable the stop button by indicating that we are recording
-    	toggleButtons(true);
+    	toggleButtons(true)
     } catch { 
       case e: Exception => 
-      	Log.wtf(TAG, "Failed to prepare MediaRecorder", e);
+      	Log.wtf(TAG, "Failed to prepare MediaRecorder", e)
         toast(s"startRecording failed ${e.getCause}")
-      	releaseMediaRecorder();
+      	releaseMediaRecorder()
     }    
 
     toast("Recording!")
@@ -67,6 +71,33 @@ class ScaloidVideoCapture extends SActivity {
   
   def stopRecording(): Unit = { 
     toast("Stopped!")
+        try {
+            mediaRecorder.stop()
+            toast("recording saved")
+            // we are no longer recording
+            toggleButtons(false);
+        } catch { 
+          case e: RuntimeException => 
+            toast("FUCK")
+            // the recording did not succeed
+            Log.w(TAG, "Failed to record", e);
+            if (file != null && file.exists() && file.delete()) {
+                Log.d(TAG, "Deleted " + file.getAbsolutePath());
+            }
+            return
+        } finally {
+            this.releaseMediaRecorder();
+        }
+        if (this.file == null || !this.file.exists()) {
+            toast("Argh... File doesn't exist")
+            Log.w(TAG, "File does not exist after stop: " + this.file.getAbsolutePath());
+        } else {
+            toast("Going to display mode")
+            Log.d(TAG, "Going to display the video: " + this.file.getAbsolutePath());
+            // val intent: Intent = new Intent(this, null)
+            // intent.setData(Uri.fromFile(file))
+            // super.startActivity(intent);
+        }    
     toggleButtons(true)
   }
 
@@ -91,18 +122,17 @@ class ScaloidVideoCapture extends SActivity {
   
   def initFile(): File = {
     var file: File = null
-        val dir: File = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), this
-                        .getClass().getPackage().getName());
-        if (!dir.exists() && !dir.mkdirs()) {
-            Log.wtf(TAG, "Failed to create storage directory: " + dir.getAbsolutePath());
-            toast("initFile failed")
-            file = null;
-        } else {
-            file = new File(dir.getAbsolutePath(), new SimpleDateFormat(
-                    "'IMG_'yyyyMMddHHmmss'.m4v'").format(new Date()));
-        }
-        file
+    val dir: File = new File(
+              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), this.getClass().getPackage().getName())
+    if (!dir.exists() && !dir.mkdirs()) {
+    	Log.wtf(TAG, "Failed to create storage directory: " + dir.getAbsolutePath())
+    	toast("initFile failed")
+    	file = null
+    } else {
+    	file = new File(dir.getAbsolutePath(), new SimpleDateFormat("'IMG_'yyyyMMddHHmmss'.m4v'").format(new Date()))
     }
+    this.file = file
+    file
+  }
   
 }
