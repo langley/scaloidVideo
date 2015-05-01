@@ -90,11 +90,10 @@ class ScaloidVideoCapture extends SActivity {
         if (this.file == null || !this.file.exists()) {
             Log.w(TAG, "File does not exist after stop: " + this.file.getAbsolutePath())
         } else {
-            toast("Going to display mode")
             Log.d(TAG, "Going to display the video: " + this.file.getAbsolutePath())
-            // val intent: Intent = new Intent(this, null)
-            // intent.setData(Uri.fromFile(file))
-            // super.startActivity(intent)
+             val intent: Intent = new Intent(this, classOf[scaloid.example.ScaloidVideoPlayback])
+             //intent.setData(Uri.fromFile(file))
+             startActivity(intent)
         }    
     toggleButtons(true)
   }
