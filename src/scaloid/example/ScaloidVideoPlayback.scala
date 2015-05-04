@@ -21,10 +21,10 @@ class ScaloidVideoPlayback extends SActivity {
 
 	val TAG = "VideoPlaybackActivity"
 	var videoView: VideoView      = null
-  var backButton: ImageButton   = null
-  var playButton: ImageButton   = null
-  var stopButton: ImageButton   = null
-  var deleteButton: ImageButton = null 
+  var backButton: SImageButton   = null
+  var playButton: SImageButton   = null
+  var stopButton: SImageButton   = null
+  var deleteButton: SImageButton = null 
   var uri: Uri = null
   
   onCreate {
@@ -48,13 +48,23 @@ class ScaloidVideoPlayback extends SActivity {
   
   def playButtonClick(): Unit = { 
 		  toast("playButtonClick")    
+		  toggleButtons(true)
   }
   
   def stopButtonClick(): Unit = { 
-    toast("stopButtonClick")    
+    toast("stopButtonClick")
+    toggleButtons(false)    
+
   }
   
   def deleteButtonClick(): Unit = { 
     toast("deleteButtonClick")    
+  }  
+  
+  def toggleButtons(playing: Boolean): Boolean = { 
+    import Utils._
+    enableButton(playing, stopButton)
+    enableButton(!playing, playButton)
+    !playing
   }  
 }

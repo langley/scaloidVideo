@@ -107,11 +107,7 @@ class ScaloidVideoCapture extends SActivity {
   }
   
   def toggleButtons(recording: Boolean): Boolean = { 
-    def enableButton(on: Boolean, button: SImageButton) = { 
-      val visiblity = if (on) View.VISIBLE else View.INVISIBLE
-      button.setVisibility(visiblity)
-      button.setEnabled(on)
-    }
+    import Utils._
     enableButton(!recording, stopRecordingButton)
     enableButton(recording, startRecordingButton)
     !recording
