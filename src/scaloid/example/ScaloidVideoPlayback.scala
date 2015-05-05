@@ -30,16 +30,22 @@ class ScaloidVideoPlayback extends SActivity {
   onCreate {
     contentView =  new SFrameLayout {
       videoView = new VideoView(context)
-        this += videoView
-        backButton = SImageButton()
-          backButton.onClick(backButtonClick)
-        playButton = SImageButton()
-          playButton.onClick(playButtonClick).imageResource(0x7f020005).Gravity(Gravity.BOTTOM)      
-        stopButton = SImageButton()
-          stopButton.onClick(stopButtonClick).imageResource(0x7f020003).Gravity(Gravity.BOTTOM)
-        deleteButton = SImageButton()
-          deleteButton.onClick(deleteButtonClick)
-    }    
+      this += videoView.Gravity(Gravity.CENTER).>>
+      backButton = SImageButton().<< (WRAP_CONTENT, WRAP_CONTENT).Gravity(Gravity.LEFT | Gravity.BOTTOM).>>
+         backButton.onClick(backButtonClick).imageResource(0x7f020004)
+         backButton.setEnabled(true)
+         backButton.setVisibility(View.VISIBLE)
+      playButton = SImageButton().<< (WRAP_CONTENT, WRAP_CONTENT).Gravity(Gravity.CENTER | Gravity.BOTTOM).>>
+         playButton.onClick(playButtonClick).imageResource(0x7f020002)
+         playButton.setEnabled(true)
+         playButton.setVisibility(View.VISIBLE)
+      stopButton = SImageButton().<< (WRAP_CONTENT, WRAP_CONTENT).Gravity(Gravity.CENTER | Gravity.BOTTOM).>>
+         stopButton.onClick(stopButtonClick).imageResource(0x7f020003)
+      deleteButton = SImageButton().<< (WRAP_CONTENT, WRAP_CONTENT).Gravity(Gravity.RIGHT | Gravity.BOTTOM).>>
+         deleteButton.onClick(deleteButtonClick).imageResource(0x7f020000)
+         deleteButton.setEnabled(true)
+         deleteButton.setVisibility(View.VISIBLE)
+    }
   }
   
   def backButtonClick(): Unit = { 
