@@ -1,8 +1,7 @@
 package scaloid.example
 
-import org.scaloid.common._
-
 import java.io.File;
+import org.scaloid.common._
 
 import android.app.Activity
 import android.media.MediaPlayer
@@ -27,6 +26,7 @@ class ScaloidVideoPlayback extends SActivity {
   var deleteButton: SImageButton = null 
   var uri: Uri = null
   
+  
   onCreate {
     contentView =  new SFrameLayout {
       videoView = new VideoView(context)
@@ -46,14 +46,17 @@ class ScaloidVideoPlayback extends SActivity {
          deleteButton.setEnabled(true)
          deleteButton.setVisibility(View.VISIBLE)
     }
+   
   }
   
-  def backButtonClick(): Unit = { 
-    toast("backButtonClick")
+  
+  def backButtonClick(): Unit = {
+		toast("backButtonClick")
+    super.finish
   }
   
   def playButtonClick(): Unit = { 
-		  toast("playButtonClick")    
+		  toast("playButtonClick")
 		  toggleButtons(true)
   }
   

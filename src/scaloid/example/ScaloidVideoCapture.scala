@@ -1,6 +1,8 @@
 package scaloid.example
 
-import org.scaloid.common._
+import java.io.File
+import java.util.Date
+import java.text.SimpleDateFormat
 
 import android.hardware.Camera
 import android.media.CamcorderProfile
@@ -12,9 +14,12 @@ import android.os.Environment
 import android.content.Intent
 import android.net.Uri
 
-import java.io.File
-import java.util.Date
-import java.text.SimpleDateFormat
+import scala.concurrent._
+import scala.concurrent.ExecutionContext.Implicits.global
+
+import org.scaloid.common._
+
+
 
 class ScaloidVideoCapture extends SActivity {
   val TAG = "VideoCaptureActivity"
@@ -40,6 +45,11 @@ class ScaloidVideoCapture extends SActivity {
           stopRecordingButton.setVisibility(View.INVISIBLE)
     }
   }
+  override def onResume: Unit = { 
+    super.onResume()
+    toast("Not reinitializing the camera and cameraPreview properly yet!")
+  }
+
   
   def startRecording(): Unit = {
     camera.unlock()
